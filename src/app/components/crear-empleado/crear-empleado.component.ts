@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-crear-empleado',
@@ -8,9 +9,32 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CrearEmpleadoComponent implements OnInit {
 
-  constructor() { }
+  createForm: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.createForm = this.fb.group({
+      nombre: ['', Validators.required],
+      apellidos: ['', Validators.required],
+      documento: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
+      salario: ['', [Validators.required, Validators.min(0)]]
+    })
+  }
 
   ngOnInit(): void {
+  }
+
+  registrarEmpleado() {
+    if (this.createForm.valid) {
+      const date = new Date();
+
+      const infoEmpleado = {
+        ...this.createForm.value,
+        fecha_creacion: date,
+        fecha_actualizacion: date
+      }
+
+      console.log(infoEmpleado);
+    }
   }
 
 }
