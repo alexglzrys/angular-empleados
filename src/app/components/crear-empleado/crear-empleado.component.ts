@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EmpleadosService } from '../../services/empleados.service';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-crear-empleado',
@@ -15,7 +17,8 @@ export class CrearEmpleadoComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private empleadosService: EmpleadosService,
-              private router: Router) {
+              private router: Router,
+              private toastr: ToastrService) {
     this.createForm = this.fb.group({
       nombre: ['', Validators.required],
       apellidos: ['', Validators.required],
@@ -38,9 +41,10 @@ export class CrearEmpleadoComponent implements OnInit {
       }
 
       this.empleadosService.registrarEmpleado(infoEmpleado).then(res => {
-        console.log(res)
+        this.toastr.success('Empleado registrado correctamente en el sistema', 'Empleados IT', { positionClass: 'toast-bottom-right'});
         this.router.navigate(['/']);
       }).catch(err => {
+        this.toastr.error('Ocurrió un error inesperado, favor de intentar mas tarde', 'Empleados IT', {positionClass: 'toast-bottom-right'});
         console.log(err)
       })
     }
