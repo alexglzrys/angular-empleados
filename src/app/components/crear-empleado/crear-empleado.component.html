@@ -3,9 +3,14 @@
     <div class="col-md-6 offset-md-3">
       <div class="card mt-5">
         <div class="card-body">
-          <div class="header mb-4 text-center">
-            <h5 class="card-title mb-1">Información del Empleado</h5>
-            <span *ngIf="createForm.invalid" class="badge bg-danger">Todos los campos son obligatorios</span>
+          <div class="header mb-5 text-center">
+            <div class="header-container">
+              <h5 class="card-title mb-1">Información del Empleado</h5>
+              <div *ngIf="loading" class="spinner-border text-danger float-end spiner" role="status">
+                <span class="visually-hidden"></span>
+              </div>
+              <span *ngIf="submitted && createForm.invalid" class="badge bg-danger">Todos los campos son obligatorios</span>
+            </div>
           </div>
           <form [formGroup]="createForm" (ngSubmit)="registrarEmpleado()">
             <div class="row">
@@ -27,7 +32,7 @@
                 <i class="fa fa-arrow-circle-left me-2"></i>
                 Volver
               </button>
-              <button type="submit" class="btn btn-danger" [disabled]="createForm.invalid">
+              <button type="submit" class="btn btn-danger" [disabled]="createForm.invalid || loading">
                 <i class="fa fa-save me-2"></i>
                 Registrar
               </button>

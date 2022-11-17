@@ -14,6 +14,8 @@ import { ToastrService } from 'ngx-toastr';
 export class CrearEmpleadoComponent implements OnInit {
 
   createForm: FormGroup;
+  submitted: boolean = false;
+  loading: boolean = false;
 
   constructor(private fb: FormBuilder,
               private empleadosService: EmpleadosService,
@@ -32,6 +34,9 @@ export class CrearEmpleadoComponent implements OnInit {
 
   registrarEmpleado() {
     if (this.createForm.valid) {
+      this.loading = true;
+      this.submitted = true;
+
       const date = new Date();
 
       const infoEmpleado = {
@@ -41,9 +46,11 @@ export class CrearEmpleadoComponent implements OnInit {
       }
 
       this.empleadosService.registrarEmpleado(infoEmpleado).then(res => {
+        this.loading = false;
         this.toastr.success('Empleado registrado correctamente en el sistema', 'Empleados IT', { positionClass: 'toast-bottom-right'});
         this.router.navigate(['/']);
       }).catch(err => {
+        this.loading = false;
         this.toastr.error('Ocurrió un error inesperado, favor de intentar mas tarde', 'Empleados IT', {positionClass: 'toast-bottom-right'});
         console.log(err)
       })
