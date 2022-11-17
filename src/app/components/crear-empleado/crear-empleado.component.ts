@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { EmpleadosService } from '../../services/empleados.service';
 
 @Component({
   selector: 'app-crear-empleado',
@@ -11,7 +13,9 @@ export class CrearEmpleadoComponent implements OnInit {
 
   createForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+              private empleadosService: EmpleadosService,
+              private router: Router) {
     this.createForm = this.fb.group({
       nombre: ['', Validators.required],
       apellidos: ['', Validators.required],
@@ -33,7 +37,12 @@ export class CrearEmpleadoComponent implements OnInit {
         fecha_actualizacion: date
       }
 
-      console.log(infoEmpleado);
+      this.empleadosService.registrarEmpleado(infoEmpleado).then(res => {
+        console.log(res)
+        this.router.navigate(['/']);
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 
