@@ -6,7 +6,8 @@
         <button [routerLink]="['/create']" class="btn btn-danger btn-sm">
           <i class="fa fa-plus me-2"></i>Nuevo empleado</button>
       </header>
-      <table class="table table-hover table-striped">
+      <p *ngIf="empleados.length == 0">No existen registros para mostrar</p>
+      <table *ngIf="empleados.length" class="table table-hover table-striped">
         <thead>
           <tr>
             <th>Nombre</th>
@@ -24,7 +25,7 @@
             <td>{{ empleado.salario | currency }}</td>
             <td class="text-center controls">
               <i class="fa fa-edit text-success me-2"></i>
-              <i class="fa fa-trash text-danger"></i>
+              <i (click)="eliminarEmpleado(empleado.id!)" class="fa fa-trash text-danger"></i>
             </td>
           </tr>
         </tbody>

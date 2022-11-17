@@ -24,4 +24,8 @@ export class EmpleadosService {
       ))
     );
   }
+
+  eliminarEmpleado(id: string): Promise<void> {
+    return this.firestore.collection('empleados').doc(id).delete();
+  }
 }
