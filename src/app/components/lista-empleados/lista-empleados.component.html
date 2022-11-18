@@ -24,7 +24,7 @@
             <td>{{ empleado.documento }}</td>
             <td>{{ empleado.salario | currency }}</td>
             <td class="text-center controls">
-              <i class="fa fa-edit text-success me-2"></i>
+              <i [routerLink]="['/edit', empleado.id!]" class="fa fa-edit text-success me-2"></i>
               <i (click)="eliminarEmpleado(empleado.id!)" class="fa fa-trash text-danger"></i>
             </td>
           </tr>

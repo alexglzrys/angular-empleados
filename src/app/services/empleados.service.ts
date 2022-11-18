@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Empleado } from '../interfaces/empleado';
-import { AngularFirestore, DocumentReference, DocumentChangeAction } from '@angular/fire/compat/firestore'
+import { AngularFirestore, DocumentReference, DocumentChangeAction, DocumentSnapshot } from '@angular/fire/compat/firestore'
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import {} from '@angular/fire'
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,10 @@ export class EmpleadosService {
 
   registrarEmpleado(empleado: Empleado): Promise<DocumentReference<unknown>> {
     return this.firestore.collection('empleados').add(empleado);
+  }
+
+  actualizarEmpleado(id: string, empleado: Empleado): Promise<void> {
+    return this.firestore.collection('empleados').doc(id).update(empleado);
   }
 
   obtenerEmpleados(): Observable<Empleado[]> {
@@ -27,5 +32,9 @@ export class EmpleadosService {
 
   eliminarEmpleado(id: string): Promise<void> {
     return this.firestore.collection('empleados').doc(id).delete();
+  }
+
+  buscarEmpleadoPorId(id: string): Observable<any> {
+    return this.firestore.collection('empleados').doc(id).get();
   }
 }

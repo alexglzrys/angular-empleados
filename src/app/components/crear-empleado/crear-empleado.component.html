@@ -5,14 +5,14 @@
         <div class="card-body">
           <div class="header mb-5 text-center">
             <div class="header-container">
-              <h5 class="card-title mb-1">Información del Empleado</h5>
+              <h5 class="card-title mb-1">{{ title }}</h5>
               <div *ngIf="loading" class="spinner-border text-danger float-end spiner" role="status">
                 <span class="visually-hidden"></span>
               </div>
               <span *ngIf="submitted && createForm.invalid" class="badge bg-danger">Todos los campos son obligatorios</span>
             </div>
           </div>
-          <form [formGroup]="createForm" (ngSubmit)="registrarEmpleado()">
+          <form [formGroup]="createForm" (ngSubmit)="procesarFormulario()">
             <div class="row">
               <div class="col">
                 <input type="text" placeholder="Nombre" class="form-control" formControlName="nombre">
@@ -34,7 +34,7 @@
               </button>
               <button type="submit" class="btn btn-danger" [disabled]="createForm.invalid || loading">
                 <i class="fa fa-save me-2"></i>
-                Registrar
+                {{ titleButton }}
               </button>
             </div>
           </form>
